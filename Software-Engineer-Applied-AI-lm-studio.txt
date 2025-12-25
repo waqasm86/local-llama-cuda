@@ -1,0 +1,20 @@
+Software Engineer, Applied AI
+Engineering
+
+New York 🗽
+The Role
+We're looking for a product-minded, applied AI engineer to lead our agentic work in LM Studio. You bring a scientific method mindset: design experiments, visualize results, run ablations, and explain what moves quality and speed. You know the literature and can implement from papers, but you are a practitioner first — a serious software engineer who builds robust systems fast. Your work turns into product features immediately across our app and API.
+
+Your mandate will be to push the usefulness of on-device AI beyond what is commonly considered possible. Your work will directly translate into features we ship to millions of home and business users.
+
+Qualifications
+Empirical research mindset: design experiments, visualize results, run ablations.
+Interest in building products for users and keeping a feedback loop with customers.
+4+ years building production software (Python or C++. TypeScript a plus).
+Strong algorithms background.
+Compensation
+$165,000 – $350,000 USD (offering equity)
+Who We Are
+We aim to build delightful and potent creation tools for AI. We are a small team based in New York. Everyone on the team is IC-minded, intellectually curious, self-motivated, and loves software. We care deeply about our user community and we strive to build canonical software that users and developers love.
+
+Our products include the LM Studio desktop app, our developer SDKs: lmstudio-js and lmstudio-python, our CLI lms, MLX engine mlx-engine for M-chip Macs, venvstacks which enables us to ship Python-based software, the collaboration Hub for individuals and teams, and more currently being built.

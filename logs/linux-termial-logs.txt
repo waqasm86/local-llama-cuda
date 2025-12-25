@@ -1,0 +1,189 @@
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ touch model.gguf
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ bash ../verify_cuda.sh
+========================================
+ CUDA Implementation Verification
+========================================
+
+1. Checking CUDA device...
+NVIDIA GeForce 940M, 570.195.03, 1024 MiB
+
+2. Running CUDA unit tests...
+CUDA tests: PASSED
+✅ CUDA unit tests passed
+
+3. Running all unit tests...
+Test project /media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build
+    Start 1: CoreTests
+1/3 Test #1: CoreTests ........................   Passed    0.00 sec
+    Start 2: CUDATests
+2/3 Test #2: CUDATests ........................   Passed    0.00 sec
+    Start 3: StorageTests
+3/3 Test #3: StorageTests .....................   Passed    0.00 sec
+Total Test time (real) =   0.01 sec
+✅ All unit tests passed
+
+4. Verifying CUDA-enabled executables...
+  ✅ bench_latency (380K)
+  ✅ bench_throughput (352K)
+  ✅ llcuda_mpi (612K)
+  ✅ test_cuda (352K)
+
+5. Testing help outputs...
+  ✅ bench_latency --help
+  ✅ bench_throughput --help
+  ✅ llcuda_mpi --help
+
+6. Checking CUDA kernels in binaries...
+  ✅ bench_latency contains CUDA code
+  ✅ bench_throughput contains CUDA code
+  ✅ llcuda_mpi contains CUDA code
+
+========================================
+ Verification Complete
+========================================
+
+All CUDA components are working correctly!
+
+To run benchmarks (requires llama-server on port 8090):
+  ./bench_latency --server http://127.0.0.1:8090 --iters 10 --cuda-work
+  ./bench_throughput --server http://127.0.0.1:8090 --iters 10 --cuda-work
+  mpirun -np 2 ./llcuda_mpi --server http://127.0.0.1:8090 --iters 10 --cuda-post
+
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ ./bench_latency --server http://127.0.0.1:8090 --iters 10
+=================================================\n  Latency Benchmark (CUDA-Accelerated)\n=================================================\nServer:      http://127.0.0.1:8090\nIterations:  10\nMax Tokens:  64\nCUDA Work:   Disabled\n=================================================\n\nCUDA Device: NVIDIA GeForce 940M\n\nRunning 10 iterations...\n  Progress: 10/10\r\n\n=================================================\n  Latency Results (milliseconds)\n=================================================\n  Min:      5157.64 ms\n  p50:      5654.49 ms\n  p95:      6229.59 ms\n  p99:      6229.59 ms\n  Max:      6229.59 ms\n=================================================\nwaqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/E./bench_latency --server http://127.0.0.1:8090 --iters 10 --cuda-work --cuda-iters 2000.1:8090 --iters 10 --cuda-work --cuda-iters 2000
+=================================================\n  Latency Benchmark (CUDA-Accelerated)\n=================================================\nServer:      http://127.0.0.1:8090\nIterations:  10\nMax Tokens:  64\nCUDA Work:   Enabled\nCUDA Iters:  2000\n=================================================\n\nCUDA Device: NVIDIA GeForce 940M\n\nRunning 10 iterations...\n  Progress: 10/10\r\n\n=================================================\n  Latency Results (milliseconds)\n=================================================\n  Min:      4863.84 ms\n  p50:      4984.01 ms\n  p95:      5252.69 ms\n  p99:      5252.69 ms\n  Max:      5252.69 ms\n=================================================\nwaqasm86@waqasm86-ThinkPad-T450s./bench_throughput --server http://127.0.0.1:8090 --iters 10 ild$ ./bench_throughput --server http://127.0.0.1:8090 --iters 10 
+=================================================
+  Throughput Benchmark (CUDA-Accelerated)
+=================================================
+Server:      http://127.0.0.1:8090
+Iterations:  10
+Max Tokens:  64
+CUDA Work:   Disabled
+=================================================
+
+CUDA Device: NVIDIA GeForce 940M
+
+Running 10 iterations...
+
+=================================================
+  Results
+=================================================
+  Total Tokens:        640
+  Total Time:          53.80 s
+  Throughput:          11.90 tokens/sec
+=================================================
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ ./bench_throughput --server http://127.0.0.1:8090 --iters 10 --cuda-work
+=================================================
+  Throughput Benchmark (CUDA-Accelerated)
+=================================================
+Server:      http://127.0.0.1:8090
+Iterations:  10
+Max Tokens:  64
+CUDA Work:   Enabled
+=================================================
+
+CUDA Device: NVIDIA GeForce 940M
+
+Running 10 iterations...
+
+=================================================
+  Results
+=================================================
+  Total Tokens:        640
+  Total Time:          52.65 s
+  Throughput:          12.17 tokens/sec
+=================================================
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ mpirun -np 2 ./llcuda_mpi --server http://127.0.0.1:8090 --iters 10
+=================================================
+  MPI Distributed Scheduler (CUDA-Accelerated)
+=================================================
+MPI Ranks:   2
+CUDA Device: NVIDIA GeForce 940M
+Server:      http://127.0.0.1:8090
+Iterations:  10
+Inflight:    4
+n_predict:   64
+CUDA Post:   Disabled
+=================================================
+
+Rank 0 (Master): Distributing 10 jobs...
+
+  Progress: 5/10 jobs completed
+  Progress: 10/10 jobs completed
+
+=================================================
+  MPI Scheduler Results
+=================================================
+  Total Jobs:      10
+  MPI Ranks:       2
+  Total Tokens:    640
+  Mean Latency:    6184.81 ms
+  p50:             6244.70 ms
+  p95:             6383.87 ms
+  p99:             6383.87 ms
+  Throughput:      10.35 tokens/sec
+  Speedup:         1.00x (vs single rank)
+=================================================
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ mpirun -np 2 ./llcuda_mpi --server http://127.0.0.1:8090 --iters 10 --cuda-post --cuda-work 2000
+=================================================
+  MPI Distributed Scheduler (CUDA-Accelerated)
+=================================================
+MPI Ranks:   2
+CUDA Device: NVIDIA GeForce 940M
+Server:      http://127.0.0.1:8090
+Iterations:  10
+Inflight:    4
+n_predict:   64
+CUDA Post:   Enabled
+=================================================
+
+Rank 0 (Master): Distributing 10 jobs...
+
+  Progress: 5/10 jobs completed
+  Progress: 10/10 jobs completed
+
+=================================================
+  MPI Scheduler Results
+=================================================
+  Total Jobs:      10
+  MPI Ranks:       2
+  Total Tokens:    640
+  Mean Latency:    6389.27 ms
+  p50:             6416.72 ms
+  p95:             6633.24 ms
+  p99:             6633.24 ms
+  Throughput:      10.02 tokens/sec
+  Speedup:         1.00x (vs single rank)
+=================================================
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ mpirun --oversubscribe -np 4 ./llcuda_mpi --server http://127.0.0.1:8090 --iters 10 --cuda-post
+=================================================
+  MPI Distributed Scheduler (CUDA-Accelerated)
+=================================================
+MPI Ranks:   4
+CUDA Device: NVIDIA GeForce 940M
+Server:      http://127.0.0.1:8090
+Iterations:  10
+Inflight:    4
+n_predict:   64
+CUDA Post:   Enabled
+=================================================
+
+Rank 0 (Master): Distributing 10 jobs...
+
+  Progress: 5/10 jobs completed
+  Progress: 10/10 jobs completed
+
+=================================================
+  MPI Scheduler Results
+=================================================
+  Total Jobs:      10
+  MPI Ranks:       4
+  Total Tokens:    640
+  Mean Latency:    18389.20 ms
+  p50:             20826.99 ms
+  p95:             21497.16 ms
+  p99:             21497.16 ms
+  Throughput:      3.48 tokens/sec
+  Speedup:         3.00x (vs single rank)
+=================================================
+waqasm86@waqasm86-ThinkPad-T450s:/media/waqasm86/External1/Project-Nvidia/local-llama-cuda/build$ 
