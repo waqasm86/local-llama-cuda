@@ -374,7 +374,7 @@ mpirun -np 2 ./llcuda_mpi --iters 10 --cuda-post
 - **Results:** [logs/BENCHMARK_RESULTS_SUMMARY.md](logs/BENCHMARK_RESULTS_SUMMARY.md)
 
 ### Support
-- GitHub: [Issues](https://github.com/anthropics/claude-code/issues) (for tool support)
+- GitHub: [Issues](https://github.com/waqasm86/local-llama-cuda/issues)
 - Documentation: See `.md` files in project root
 - Logs: Check `logs/` directory for detailed output
 
